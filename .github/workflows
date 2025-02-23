@@ -1,0 +1,28 @@
+name: Excel-GSheets Automation
+on:
+  schedule:
+    - cron: "0 * * * *"  # Runs every hour; adjust as needed
+jobs:
+  run-automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas gspread openpyxl google-auth
+
+      - name: Add service account JSON
+        # Use GitHub Secrets to inject your JSON file securely
+        run: echo "$SERVICE_ACCOUNT_JSON" > google_python_credentials.json
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+
+      - name: Run automation script
+        run: googletopy.py
