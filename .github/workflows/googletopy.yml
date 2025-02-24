@@ -1,7 +1,7 @@
 name: Excel-GSheets Automation
 on:
   schedule:
-    - cron: "0 * * * *"  # Runs every hour; adjust as needed
+    - cron: "30 9* * * *"  # Runs every hour; adjust as needed
 jobs:
   run-automation:
     runs-on: ubuntu-latest
@@ -16,7 +16,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas gspread openpyxl google-auth
+          pip install numpy pandas gspread openpyxl google-auth
 
       - name: Add service account JSON
         # Use GitHub Secrets to inject your JSON file securely
